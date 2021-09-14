@@ -1,377 +1,1304 @@
 <template>
-  <Head title="Welcome" />
-
-  <div
-    class="
-      relative
-      flex
-      items-top
-      justify-center
-      min-h-screen
-      bg-gray-100
-      dark:bg-gray-900
-      sm:items-center
-      sm:pt-0
-    "
-  >
-    <div v-if="canLogin" class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-      <Link
-        v-if="$page.props.user"
-        :href="route('dashboard')"
-        class="text-sm text-gray-700 underline"
+  <div class="bg-white">
+    <!-- Mobile menu -->
+    <TransitionRoot as="template" :show="open">
+      <Dialog
+        as="div"
+        class="fixed inset-0 flex z-40 lg:hidden"
+        @close="open = false"
       >
-        Dashboard
-      </Link>
-
-      <template v-else>
-        <Link :href="route('login')" class="text-sm text-gray-700 underline">
-          Log in
-        </Link>
-
-        <Link
-          v-if="canRegister"
-          :href="route('register')"
-          class="ml-4 text-sm text-gray-700 underline"
+        <TransitionChild
+          as="template"
+          enter="transition-opacity ease-linear duration-300"
+          enter-from="opacity-0"
+          enter-to="opacity-100"
+          leave="transition-opacity ease-linear duration-300"
+          leave-from="opacity-100"
+          leave-to="opacity-0"
         >
-          Register
-        </Link>
-      </template>
-    </div>
+          <DialogOverlay class="fixed inset-0 bg-black bg-opacity-25" />
+        </TransitionChild>
 
-    <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-      <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-        <svg
-          viewBox="0 0 651 192"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-16 w-auto text-gray-700 sm:h-20"
+        <TransitionChild
+          as="template"
+          enter="transition ease-in-out duration-300 transform"
+          enter-from="-translate-x-full"
+          enter-to="translate-x-0"
+          leave="transition ease-in-out duration-300 transform"
+          leave-from="translate-x-0"
+          leave-to="-translate-x-full"
         >
-          <g clip-path="url(#clip0)" fill="#EF3B2D">
-            <path
-              d="M248.032 44.676h-16.466v100.23h47.394v-14.748h-30.928V44.676zM337.091 87.202c-2.101-3.341-5.083-5.965-8.949-7.875-3.865-1.909-7.756-2.864-11.669-2.864-5.062 0-9.69.931-13.89 2.792-4.201 1.861-7.804 4.417-10.811 7.661-3.007 3.246-5.347 6.993-7.016 11.239-1.672 4.249-2.506 8.713-2.506 13.389 0 4.774.834 9.26 2.506 13.459 1.669 4.202 4.009 7.925 7.016 11.169 3.007 3.246 6.609 5.799 10.811 7.66 4.199 1.861 8.828 2.792 13.89 2.792 3.913 0 7.804-.955 11.669-2.863 3.866-1.908 6.849-4.533 8.949-7.875v9.021h15.607V78.182h-15.607v9.02zm-1.431 32.503c-.955 2.578-2.291 4.821-4.009 6.73-1.719 1.91-3.795 3.437-6.229 4.582-2.435 1.146-5.133 1.718-8.091 1.718-2.96 0-5.633-.572-8.019-1.718-2.387-1.146-4.438-2.672-6.156-4.582-1.719-1.909-3.032-4.152-3.938-6.73-.909-2.577-1.36-5.298-1.36-8.161 0-2.864.451-5.585 1.36-8.162.905-2.577 2.219-4.819 3.938-6.729 1.718-1.908 3.77-3.437 6.156-4.582 2.386-1.146 5.059-1.718 8.019-1.718 2.958 0 5.656.572 8.091 1.718 2.434 1.146 4.51 2.674 6.229 4.582 1.718 1.91 3.054 4.152 4.009 6.729.953 2.577 1.432 5.298 1.432 8.162-.001 2.863-.479 5.584-1.432 8.161zM463.954 87.202c-2.101-3.341-5.083-5.965-8.949-7.875-3.865-1.909-7.756-2.864-11.669-2.864-5.062 0-9.69.931-13.89 2.792-4.201 1.861-7.804 4.417-10.811 7.661-3.007 3.246-5.347 6.993-7.016 11.239-1.672 4.249-2.506 8.713-2.506 13.389 0 4.774.834 9.26 2.506 13.459 1.669 4.202 4.009 7.925 7.016 11.169 3.007 3.246 6.609 5.799 10.811 7.66 4.199 1.861 8.828 2.792 13.89 2.792 3.913 0 7.804-.955 11.669-2.863 3.866-1.908 6.849-4.533 8.949-7.875v9.021h15.607V78.182h-15.607v9.02zm-1.432 32.503c-.955 2.578-2.291 4.821-4.009 6.73-1.719 1.91-3.795 3.437-6.229 4.582-2.435 1.146-5.133 1.718-8.091 1.718-2.96 0-5.633-.572-8.019-1.718-2.387-1.146-4.438-2.672-6.156-4.582-1.719-1.909-3.032-4.152-3.938-6.73-.909-2.577-1.36-5.298-1.36-8.161 0-2.864.451-5.585 1.36-8.162.905-2.577 2.219-4.819 3.938-6.729 1.718-1.908 3.77-3.437 6.156-4.582 2.386-1.146 5.059-1.718 8.019-1.718 2.958 0 5.656.572 8.091 1.718 2.434 1.146 4.51 2.674 6.229 4.582 1.718 1.91 3.054 4.152 4.009 6.729.953 2.577 1.432 5.298 1.432 8.162 0 2.863-.479 5.584-1.432 8.161zM650.772 44.676h-15.606v100.23h15.606V44.676zM365.013 144.906h15.607V93.538h26.776V78.182h-42.383v66.724zM542.133 78.182l-19.616 51.096-19.616-51.096h-15.808l25.617 66.724h19.614l25.617-66.724h-15.808zM591.98 76.466c-19.112 0-34.239 15.706-34.239 35.079 0 21.416 14.641 35.079 36.239 35.079 12.088 0 19.806-4.622 29.234-14.688l-10.544-8.158c-.006.008-7.958 10.449-19.832 10.449-13.802 0-19.612-11.127-19.612-16.884h51.777c2.72-22.043-11.772-40.877-33.023-40.877zm-18.713 29.28c.12-1.284 1.917-16.884 18.589-16.884 16.671 0 18.697 15.598 18.813 16.884h-37.402zM184.068 43.892c-.024-.088-.073-.165-.104-.25-.058-.157-.108-.316-.191-.46-.056-.097-.137-.176-.203-.265-.087-.117-.161-.242-.265-.345-.085-.086-.194-.148-.29-.223-.109-.085-.206-.182-.327-.252l-.002-.001-.002-.002-35.648-20.524a2.971 2.971 0 00-2.964 0l-35.647 20.522-.002.002-.002.001c-.121.07-.219.167-.327.252-.096.075-.205.138-.29.223-.103.103-.178.228-.265.345-.066.089-.147.169-.203.265-.083.144-.133.304-.191.46-.031.085-.08.162-.104.25-.067.249-.103.51-.103.776v38.979l-29.706 17.103V24.493a3 3 0 00-.103-.776c-.024-.088-.073-.165-.104-.25-.058-.157-.108-.316-.191-.46-.056-.097-.137-.176-.203-.265-.087-.117-.161-.242-.265-.345-.085-.086-.194-.148-.29-.223-.109-.085-.206-.182-.327-.252l-.002-.001-.002-.002L40.098 1.396a2.971 2.971 0 00-2.964 0L1.487 21.919l-.002.002-.002.001c-.121.07-.219.167-.327.252-.096.075-.205.138-.29.223-.103.103-.178.228-.265.345-.066.089-.147.169-.203.265-.083.144-.133.304-.191.46-.031.085-.08.162-.104.25-.067.249-.103.51-.103.776v122.09c0 1.063.568 2.044 1.489 2.575l71.293 41.045c.156.089.324.143.49.202.078.028.15.074.23.095a2.98 2.98 0 001.524 0c.069-.018.132-.059.2-.083.176-.061.354-.119.519-.214l71.293-41.045a2.971 2.971 0 001.489-2.575v-38.979l34.158-19.666a2.971 2.971 0 001.489-2.575V44.666a3.075 3.075 0 00-.106-.774zM74.255 143.167l-29.648-16.779 31.136-17.926.001-.001 34.164-19.669 29.674 17.084-21.772 12.428-43.555 24.863zm68.329-76.259v33.841l-12.475-7.182-17.231-9.92V49.806l12.475 7.182 17.231 9.92zm2.97-39.335l29.693 17.095-29.693 17.095-29.693-17.095 29.693-17.095zM54.06 114.089l-12.475 7.182V46.733l17.231-9.92 12.475-7.182v74.537l-17.231 9.921zM38.614 7.398l29.693 17.095-29.693 17.095L8.921 24.493 38.614 7.398zM5.938 29.632l12.475 7.182 17.231 9.92v79.676l.001.005-.001.006c0 .114.032.221.045.333.017.146.021.294.059.434l.002.007c.032.117.094.222.14.334.051.124.088.255.156.371a.036.036 0 00.004.009c.061.105.149.191.222.288.081.105.149.22.244.314l.008.01c.084.083.19.142.284.215.106.083.202.178.32.247l.013.005.011.008 34.139 19.321v34.175L5.939 144.867V29.632h-.001zm136.646 115.235l-65.352 37.625V148.31l48.399-27.628 16.953-9.677v33.862zm35.646-61.22l-29.706 17.102V66.908l17.231-9.92 12.475-7.182v33.841z"
-            />
-          </g>
-        </svg>
-      </div>
-
-      <div
-        class="
-          mt-8
-          bg-white
-          dark:bg-gray-800
-          overflow-hidden
-          shadow
-          sm:rounded-lg
-        "
-      >
-        <div class="grid grid-cols-1 md:grid-cols-2">
-          <div class="p-6">
-            <div class="flex items-center">
-              <svg
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                viewBox="0 0 24 24"
-                class="w-8 h-8 text-gray-500"
-              >
-                <path
-                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                ></path>
-              </svg>
-              <div class="ml-4 text-lg leading-7 font-semibold">
-                <a
-                  href="https://laravel.com/docs"
-                  class="underline text-gray-900 dark:text-white"
-                  >Documentation</a
-                >
-              </div>
-            </div>
-
-            <div class="ml-12">
-              <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                Laravel has wonderful, thorough documentation covering every
-                aspect of the framework. Whether you are new to the framework or
-                have previous experience with Laravel, we recommend reading all
-                of the documentation from beginning to end.
-              </div>
-            </div>
-          </div>
-
           <div
             class="
-              p-6
-              border-t border-gray-200
-              dark:border-gray-700
-              md:border-t-0 md:border-l
+              relative
+              max-w-xs
+              w-full
+              bg-white
+              shadow-xl
+              pb-12
+              flex flex-col
+              overflow-y-auto
             "
           >
-            <div class="flex items-center">
-              <svg
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                viewBox="0 0 24 24"
-                class="w-8 h-8 text-gray-500"
-              >
-                <path
-                  d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
-                ></path>
-                <path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
-              </svg>
-              <div class="ml-4 text-lg leading-7 font-semibold">
-                <a
-                  href="https://laracasts.com"
-                  class="underline text-gray-900 dark:text-white"
-                  >Laracasts</a
-                >
-              </div>
-            </div>
-
-            <div class="ml-12">
-              <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                Laracasts offers thousands of video tutorials on Laravel, PHP,
-                and JavaScript development. Check them out, see for yourself,
-                and massively level up your development skills in the process.
-              </div>
-            </div>
-          </div>
-
-          <div class="p-6 border-t border-gray-200 dark:border-gray-700">
-            <div class="flex items-center">
-              <svg
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                viewBox="0 0 24 24"
-                class="w-8 h-8 text-gray-500"
-              >
-                <path
-                  d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
-                ></path>
-              </svg>
-              <div class="ml-4 text-lg leading-7 font-semibold">
-                <a
-                  href="https://laravel-news.com/"
-                  class="underline text-gray-900 dark:text-white"
-                  >Laravel News</a
-                >
-              </div>
-            </div>
-
-            <div class="ml-12">
-              <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                Laravel News is a community driven portal and newsletter
-                aggregating all of the latest and most important news in the
-                Laravel ecosystem, including new package releases and tutorials.
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="
-              p-6
-              border-t border-gray-200
-              dark:border-gray-700
-              md:border-l
-            "
-          >
-            <div class="flex items-center">
-              <svg
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                viewBox="0 0 24 24"
-                class="w-8 h-8 text-gray-500"
-              >
-                <path
-                  d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                ></path>
-              </svg>
-              <div
+            <div class="px-4 pt-5 pb-2 flex">
+              <button
+                type="button"
                 class="
-                  ml-4
-                  text-lg
-                  leading-7
-                  font-semibold
-                  text-gray-900
-                  dark:text-white
+                  -m-2
+                  p-2
+                  rounded-md
+                  inline-flex
+                  items-center
+                  justify-center
+                  text-gray-400
                 "
+                @click="open = false"
               >
-                Vibrant Ecosystem
+                <span class="sr-only">Close menu</span>
+                <XIcon class="h-6 w-6" aria-hidden="true" />
+              </button>
+            </div>
+
+            <!-- Links -->
+            <TabGroup as="div" class="mt-2">
+              <div class="border-b border-gray-200">
+                <TabList class="-mb-px flex px-4 space-x-8">
+                  <Tab
+                    as="template"
+                    v-for="category in navigation.categories"
+                    :key="category.name"
+                    v-slot="{ selected }"
+                  >
+                    <button
+                      :class="[
+                        selected
+                          ? 'text-indigo-600 border-indigo-600'
+                          : 'text-gray-900 border-transparent',
+                        'flex-1 whitespace-nowrap py-4 px-1 border-b-2 text-base font-medium',
+                      ]"
+                    >
+                      {{ category.name }}
+                    </button>
+                  </Tab>
+                </TabList>
+              </div>
+              <TabPanels as="template">
+                <TabPanel
+                  v-for="category in navigation.categories"
+                  :key="category.name"
+                  class="px-4 py-6 space-y-12"
+                >
+                  <div class="grid grid-cols-2 gap-x-4 gap-y-10">
+                    <div
+                      v-for="item in category.featured"
+                      :key="item.name"
+                      class="group relative"
+                    >
+                      <div
+                        class="
+                          aspect-w-1 aspect-h-1
+                          rounded-md
+                          bg-gray-100
+                          overflow-hidden
+                          group-hover:opacity-75
+                        "
+                      >
+                        <img
+                          :src="item.imageSrc"
+                          :alt="item.imageAlt"
+                          class="object-center object-cover"
+                        />
+                      </div>
+                      <a
+                        :href="item.href"
+                        class="mt-6 block text-sm font-medium text-gray-900"
+                      >
+                        <span
+                          class="absolute z-10 inset-0"
+                          aria-hidden="true"
+                        />
+                        {{ item.name }}
+                      </a>
+                      <p aria-hidden="true" class="mt-1 text-sm text-gray-500">
+                        Shop now
+                      </p>
+                    </div>
+                  </div>
+                </TabPanel>
+              </TabPanels>
+            </TabGroup>
+
+            <div class="border-t border-gray-200 py-6 px-4 space-y-6">
+              <div
+                v-for="page in navigation.pages"
+                :key="page.name"
+                class="flow-root"
+              >
+                <a
+                  :href="page.href"
+                  class="-m-2 p-2 block font-medium text-gray-900"
+                  >{{ page.name }}</a
+                >
               </div>
             </div>
 
-            <div class="ml-12">
-              <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                Laravel's robust library of first-party tools and libraries,
-                such as
-                <a href="https://forge.laravel.com" class="underline">Forge</a>,
-                <a href="https://vapor.laravel.com" class="underline">Vapor</a>,
-                <a href="https://nova.laravel.com" class="underline">Nova</a>,
-                and
-                <a href="https://envoyer.io" class="underline">Envoyer</a> help
-                you take your projects to the next level. Pair them with
-                powerful open source libraries like
-                <a href="https://laravel.com/docs/billing" class="underline"
-                  >Cashier</a
-                >,
-                <a href="https://laravel.com/docs/dusk" class="underline"
-                  >Dusk</a
-                >,
+            <div class="border-t border-gray-200 py-6 px-4 space-y-6">
+              <div class="flow-root">
+                <a href="#" class="-m-2 p-2 block font-medium text-gray-900"
+                  >Create an account</a
+                >
+              </div>
+              <div class="flow-root">
+                <a href="#" class="-m-2 p-2 block font-medium text-gray-900"
+                  >Sign in</a
+                >
+              </div>
+            </div>
+
+            <div class="border-t border-gray-200 py-6 px-4 space-y-6">
+              <!-- Currency selector -->
+              <form>
+                <div class="inline-block">
+                  <label for="mobile-currency" class="sr-only">Currency</label>
+                  <div
+                    class="
+                      -ml-2
+                      group
+                      relative
+                      border-transparent
+                      rounded-md
+                      focus-within:ring-2 focus-within:ring-white
+                    "
+                  >
+                    <select
+                      id="mobile-currency"
+                      name="currency"
+                      class="
+                        bg-none
+                        border-transparent
+                        rounded-md
+                        py-0.5
+                        pl-2
+                        pr-5
+                        flex
+                        items-center
+                        text-sm
+                        font-medium
+                        text-gray-700
+                        group-hover:text-gray-800
+                        focus:outline-none
+                        focus:ring-0
+                        focus:border-transparent
+                      "
+                    >
+                      <option v-for="currency in currencies" :key="currency">
+                        {{ currency }}
+                      </option>
+                    </select>
+                    <div
+                      class="
+                        absolute
+                        right-0
+                        inset-y-0
+                        flex
+                        items-center
+                        pointer-events-none
+                      "
+                    >
+                      <svg
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 20 20"
+                        class="w-5 h-5 text-gray-500"
+                      >
+                        <path
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="1.5"
+                          d="M6 8l4 4 4-4"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </TransitionChild>
+      </Dialog>
+    </TransitionRoot>
+
+    <header class="relative">
+      <nav aria-label="Top">
+        <!-- Top navigation -->
+        <div class="bg-gray-900">
+          <div
+            class="
+              max-w-7xl
+              mx-auto
+              h-10
+              px-4
+              flex
+              items-center
+              justify-between
+              sm:px-6
+              lg:px-8
+            "
+          >
+            <!-- Currency selector -->
+            <form>
+              <div>
+                <label for="desktop-currency" class="sr-only">Currency</label>
+                <div
+                  class="
+                    -ml-2
+                    group
+                    relative
+                    bg-gray-900
+                    border-transparent
+                    rounded-md
+                    focus-within:ring-2 focus-within:ring-white
+                  "
+                >
+                  <select
+                    id="desktop-currency"
+                    name="currency"
+                    class="
+                      bg-none bg-gray-900
+                      border-transparent
+                      rounded-md
+                      py-0.5
+                      pl-2
+                      pr-5
+                      flex
+                      items-center
+                      text-sm
+                      font-medium
+                      text-white
+                      group-hover:text-gray-100
+                      focus:outline-none
+                      focus:ring-0
+                      focus:border-transparent
+                    "
+                  >
+                    <option v-for="currency in currencies" :key="currency">
+                      {{ currency }}
+                    </option>
+                  </select>
+                  <div
+                    class="
+                      absolute
+                      right-0
+                      inset-y-0
+                      flex
+                      items-center
+                      pointer-events-none
+                    "
+                  >
+                    <svg
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 20 20"
+                      class="w-5 h-5 text-gray-300"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.5"
+                        d="M6 8l4 4 4-4"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <div class="flex items-center space-x-6">
+              <a
+                href="#"
+                class="text-sm font-medium text-white hover:text-gray-100"
+                >Sign in</a
+              >
+              <a
+                href="#"
+                class="text-sm font-medium text-white hover:text-gray-100"
+                >Create an account</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Secondary navigation -->
+        <div class="bg-white">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="h-16 flex items-center justify-between">
+              <!-- Logo (lg+) -->
+              <div class="hidden lg:flex-1 lg:flex lg:items-center">
+                <a href="#">
+                  <span class="sr-only">Workflow</span>
+                  <img
+                    class="h-8 w-auto"
+                    src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
+                    alt=""
+                  />
+                </a>
+              </div>
+
+              <div class="hidden h-full lg:flex">
+                <!-- Flyout menus -->
+                <PopoverGroup class="px-4 bottom-0 inset-x-0">
+                  <div class="h-full flex justify-center space-x-8">
+                    <Popover
+                      v-for="category in navigation.categories"
+                      :key="category.name"
+                      class="flex"
+                      v-slot="{ open }"
+                    >
+                      <div class="relative flex">
+                        <PopoverButton
+                          :class="[
+                            open
+                              ? 'text-indigo-600'
+                              : 'text-gray-700 hover:text-gray-800',
+                            'relative flex items-center justify-center transition-colors ease-out duration-200 text-sm font-medium',
+                          ]"
+                        >
+                          {{ category.name }}
+                          <span
+                            :class="[
+                              open ? 'bg-indigo-600' : '',
+                              'absolute z-20 -bottom-px inset-x-0 h-0.5 transition ease-out duration-200',
+                            ]"
+                            aria-hidden="true"
+                          />
+                        </PopoverButton>
+                      </div>
+
+                      <transition
+                        enter-active-class="transition ease-out duration-200"
+                        enter-from-class="opacity-0"
+                        enter-to-class="opacity-100"
+                        leave-active-class="transition ease-in duration-150"
+                        leave-from-class="opacity-100"
+                        leave-to-class="opacity-0"
+                      >
+                        <PopoverPanel
+                          class="
+                            absolute
+                            z-10
+                            top-full
+                            inset-x-0
+                            bg-white
+                            text-sm text-gray-500
+                          "
+                        >
+                          <!-- Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow -->
+                          <div
+                            class="absolute inset-0 top-1/2 bg-white shadow"
+                            aria-hidden="true"
+                          />
+                          <!-- Fake border when menu is open -->
+                          <div
+                            class="
+                              absolute
+                              inset-0
+                              top-0
+                              h-px
+                              max-w-7xl
+                              mx-auto
+                              px-8
+                            "
+                            aria-hidden="true"
+                          >
+                            <div
+                              :class="[
+                                open ? 'bg-gray-200' : 'bg-transparent',
+                                'w-full h-px transition-colors ease-out duration-200',
+                              ]"
+                            />
+                          </div>
+
+                          <div class="relative">
+                            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                              <div
+                                class="grid grid-cols-4 gap-y-10 gap-x-8 py-16"
+                              >
+                                <div
+                                  v-for="item in category.featured"
+                                  :key="item.name"
+                                  class="group relative"
+                                >
+                                  <div
+                                    class="
+                                      aspect-w-1 aspect-h-1
+                                      rounded-md
+                                      bg-gray-100
+                                      overflow-hidden
+                                      group-hover:opacity-75
+                                    "
+                                  >
+                                    <img
+                                      :src="item.imageSrc"
+                                      :alt="item.imageAlt"
+                                      class="object-center object-cover"
+                                    />
+                                  </div>
+                                  <a
+                                    :href="item.href"
+                                    class="mt-4 block font-medium text-gray-900"
+                                  >
+                                    <span
+                                      class="absolute z-10 inset-0"
+                                      aria-hidden="true"
+                                    />
+                                    {{ item.name }}
+                                  </a>
+                                  <p aria-hidden="true" class="mt-1">
+                                    Shop now
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </PopoverPanel>
+                      </transition>
+                    </Popover>
+
+                    <a
+                      v-for="page in navigation.pages"
+                      :key="page.name"
+                      :href="page.href"
+                      class="
+                        flex
+                        items-center
+                        text-sm
+                        font-medium
+                        text-gray-700
+                        hover:text-gray-800
+                      "
+                      >{{ page.name }}</a
+                    >
+                  </div>
+                </PopoverGroup>
+              </div>
+
+              <!-- Mobile menu and search (lg-) -->
+              <div class="flex-1 flex items-center lg:hidden">
+                <button
+                  type="button"
+                  class="-ml-2 bg-white p-2 rounded-md text-gray-400"
+                  @click="open = true"
+                >
+                  <span class="sr-only">Open menu</span>
+                  <MenuIcon class="h-6 w-6" aria-hidden="true" />
+                </button>
+
+                <!-- Search -->
+                <a href="#" class="ml-2 p-2 text-gray-400 hover:text-gray-500">
+                  <span class="sr-only">Search</span>
+                  <SearchIcon class="w-6 h-6" aria-hidden="true" />
+                </a>
+              </div>
+
+              <!-- Logo (lg-) -->
+              <a href="#" class="lg:hidden">
+                <span class="sr-only">Workflow</span>
+                <img
+                  src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
+                  alt=""
+                  class="h-8 w-auto"
+                />
+              </a>
+
+              <div class="flex-1 flex items-center justify-end">
                 <a
-                  href="https://laravel.com/docs/broadcasting"
-                  class="underline"
-                  >Echo</a
-                >,
-                <a href="https://laravel.com/docs/horizon" class="underline"
-                  >Horizon</a
-                >,
-                <a href="https://laravel.com/docs/sanctum" class="underline"
-                  >Sanctum</a
-                >,
-                <a href="https://laravel.com/docs/telescope" class="underline"
-                  >Telescope</a
-                >, and more.
+                  href="#"
+                  class="
+                    hidden
+                    text-sm
+                    font-medium
+                    text-gray-700
+                    hover:text-gray-800
+                    lg:block
+                  "
+                >
+                  Search
+                </a>
+
+                <div class="flex items-center lg:ml-8">
+                  <!-- Help -->
+                  <a
+                    href="#"
+                    class="p-2 text-gray-400 hover:text-gray-500 lg:hidden"
+                  >
+                    <span class="sr-only">Help</span>
+                    <QuestionMarkCircleIcon
+                      class="w-6 h-6"
+                      aria-hidden="true"
+                    />
+                  </a>
+                  <a
+                    href="#"
+                    class="
+                      hidden
+                      text-sm
+                      font-medium
+                      text-gray-700
+                      hover:text-gray-800
+                      lg:block
+                    "
+                    >Help</a
+                  >
+
+                  <!-- Cart -->
+                  <div class="ml-4 flow-root lg:ml-8">
+                    <a href="#" class="group -m-2 p-2 flex items-center">
+                      <ShoppingBagIcon
+                        class="
+                          flex-shrink-0
+                          h-6
+                          w-6
+                          text-gray-400
+                          group-hover:text-gray-500
+                        "
+                        aria-hidden="true"
+                      />
+                      <span
+                        class="
+                          ml-2
+                          text-sm
+                          font-medium
+                          text-gray-700
+                          group-hover:text-gray-800
+                        "
+                        >0</span
+                      >
+                      <span class="sr-only">items in cart, view bag</span>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </nav>
+    </header>
 
-      <div class="flex justify-center mt-4 sm:items-center sm:justify-between">
-        <div class="text-center text-sm text-gray-500 sm:text-left">
-          <div class="flex items-center">
-            <svg
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              class="-mt-px w-5 h-5 text-gray-400"
-            >
-              <path
-                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-              ></path>
-            </svg>
-
-            <a href="https://laravel.bigcartel.com" class="ml-1 underline">
-              Shop
-            </a>
-
-            <svg
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-              class="ml-4 -mt-px w-5 h-5 text-gray-400"
-            >
-              <path
-                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-              ></path>
-            </svg>
-
-            <a
-              href="https://github.com/sponsors/taylorotwell"
-              class="ml-1 underline"
-            >
-              Sponsor
-            </a>
+    <main>
+      <!-- Hero section -->
+      <div class="relative">
+        <!-- Background image and overlap -->
+        <div
+          aria-hidden="true"
+          class="hidden absolute inset-0 sm:flex sm:flex-col"
+        >
+          <div class="flex-1 relative w-full bg-gray-800">
+            <div class="absolute inset-0 overflow-hidden">
+              <img
+                src="https://tailwindui.com/img/ecommerce-images/home-page-04-hero-full-width.jpg"
+                alt=""
+                class="w-full h-full object-center object-cover"
+              />
+            </div>
+            <div class="absolute inset-0 bg-gray-900 opacity-50" />
           </div>
+          <div class="w-full bg-white h-32 md:h-40 lg:h-48" />
         </div>
 
         <div
-          class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0"
+          class="
+            relative
+            max-w-3xl
+            mx-auto
+            pb-96
+            px-4
+            text-center
+            sm:pb-0
+            sm:px-6
+            lg:px-8
+          "
         >
-          Laravel v{{ laravelVersion }} (PHP v{{ phpVersion }})
+          <!-- Background image and overlap -->
+          <div
+            aria-hidden="true"
+            class="absolute inset-0 flex flex-col sm:hidden"
+          >
+            <div class="flex-1 relative w-full bg-gray-800">
+              <div class="absolute inset-0 overflow-hidden">
+                <img
+                  src="https://tailwindui.com/img/ecommerce-images/home-page-04-hero-full-width.jpg"
+                  alt=""
+                  class="w-full h-full object-center object-cover"
+                />
+              </div>
+              <div class="absolute inset-0 bg-gray-900 opacity-50" />
+            </div>
+            <div class="w-full bg-white h-48" />
+          </div>
+          <div class="relative py-32">
+            <h1
+              class="
+                text-4xl
+                font-extrabold
+                tracking-tight
+                text-white
+                sm:text-5xl
+                md:text-6xl
+              "
+            >
+              Mid-Season Sale
+            </h1>
+            <div class="mt-4 sm:mt-6">
+              <a
+                href="#"
+                class="
+                  inline-block
+                  bg-indigo-600
+                  border border-transparent
+                  rounded-md
+                  py-3
+                  px-8
+                  font-medium
+                  text-white
+                  hover:bg-indigo-700
+                "
+                >Shop Collection</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <section
+          aria-labelledby="collection-heading"
+          class="-mt-96 relative sm:mt-0"
+        >
+          <h2 id="collection-heading" class="sr-only">Collections</h2>
+          <div
+            class="
+              max-w-md
+              mx-auto
+              grid grid-cols-1
+              gap-y-6
+              px-4
+              sm:max-w-7xl
+              sm:px-6
+              sm:grid-cols-3
+              sm:gap-y-0 sm:gap-x-6
+              lg:px-8
+              lg:gap-x-8
+            "
+          >
+            <div
+              v-for="collection in collections"
+              :key="collection.name"
+              class="
+                group
+                relative
+                h-96
+                bg-white
+                rounded-lg
+                shadow-xl
+                sm:h-auto
+                sm:aspect-w-4 sm:aspect-h-5
+              "
+            >
+              <div>
+                <div
+                  aria-hidden="true"
+                  class="absolute inset-0 rounded-lg overflow-hidden"
+                >
+                  <div
+                    class="
+                      absolute
+                      inset-0
+                      overflow-hidden
+                      group-hover:opacity-75
+                    "
+                  >
+                    <img
+                      :src="collection.imageSrc"
+                      :alt="collection.imageAlt"
+                      class="w-full h-full object-center object-cover"
+                    />
+                  </div>
+                  <div
+                    class="
+                      absolute
+                      inset-0
+                      bg-gradient-to-b
+                      from-transparent
+                      to-black
+                      opacity-50
+                    "
+                  />
+                </div>
+                <div class="absolute inset-0 rounded-lg p-6 flex items-end">
+                  <div>
+                    <p aria-hidden="true" class="text-sm text-white">
+                      Shop the collection
+                    </p>
+                    <h3 class="mt-1 font-semibold text-white">
+                      <a :href="collection.href">
+                        <span class="absolute inset-0" />
+                        {{ collection.name }}
+                      </a>
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section aria-labelledby="trending-heading">
+        <div
+          class="max-w-7xl mx-auto py-24 px-4 sm:px-6 sm:py-32 lg:pt-32 lg:px-8"
+        >
+          <div class="md:flex md:items-center md:justify-between">
+            <h2
+              id="favorites-heading"
+              class="text-2xl font-extrabold tracking-tight text-gray-900"
+            >
+              Trending Products
+            </h2>
+            <a
+              href="#"
+              class="
+                hidden
+                text-sm
+                font-medium
+                text-indigo-600
+                hover:text-indigo-500
+                md:block
+              "
+              >Shop the collection<span aria-hidden="true"> &rarr;</span></a
+            >
+          </div>
+
+          <div
+            class="
+              mt-6
+              grid grid-cols-2
+              gap-x-4 gap-y-10
+              sm:gap-x-6
+              md:grid-cols-4
+              md:gap-y-0
+              lg:gap-x-8
+            "
+          >
+            <div
+              v-for="product in trendingProducts"
+              :key="product.id"
+              class="group relative"
+            >
+              <div
+                class="
+                  w-full
+                  h-56
+                  rounded-md
+                  overflow-hidden
+                  group-hover:opacity-75
+                  lg:h-72
+                  xl:h-80
+                "
+              >
+                <img
+                  :src="product.imageSrc"
+                  :alt="product.imageAlt"
+                  class="w-full h-full object-center object-cover"
+                />
+              </div>
+              <h3 class="mt-4 text-sm text-gray-700">
+                <a :href="product.href">
+                  <span class="absolute inset-0" />
+                  {{ product.name }}
+                </a>
+              </h3>
+              <p class="mt-1 text-sm text-gray-500">{{ product.color }}</p>
+              <p class="mt-1 text-sm font-medium text-gray-900">
+                {{ product.price }}
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-8 text-sm md:hidden">
+            <a
+              href="#"
+              class="font-medium text-indigo-600 hover:text-indigo-500"
+              >Shop the collection<span aria-hidden="true"> &rarr;</span></a
+            >
+          </div>
+        </div>
+      </section>
+
+      <section
+        aria-labelledby="perks-heading"
+        class="bg-gray-50 border-t border-gray-200"
+      >
+        <h2 id="perks-heading" class="sr-only">Our perks</h2>
+
+        <div class="max-w-7xl mx-auto py-24 px-4 sm:px-6 sm:py-32 lg:px-8">
+          <div
+            class="
+              grid grid-cols-1
+              gap-y-12
+              sm:grid-cols-2
+              sm:gap-x-6
+              lg:grid-cols-4
+              lg:gap-x-8 lg:gap-y-0
+            "
+          >
+            <div
+              v-for="perk in perks"
+              :key="perk.name"
+              class="
+                text-center
+                md:flex
+                md:items-start
+                md:text-left
+                lg:block
+                lg:text-center
+              "
+            >
+              <div class="md:flex-shrink-0">
+                <div class="flow-root">
+                  <img
+                    class="-my-1 h-24 w-auto mx-auto"
+                    :src="perk.imageUrl"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div class="mt-6 md:mt-0 md:ml-4 lg:mt-6 lg:ml-0">
+                <h3
+                  class="
+                    text-sm
+                    font-semibold
+                    tracking-wide
+                    uppercase
+                    text-gray-900
+                  "
+                >
+                  {{ perk.name }}
+                </h3>
+                <p class="mt-3 text-sm text-gray-500">
+                  {{ perk.description }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer aria-labelledby="footer-heading" class="bg-gray-50">
+      <h2 id="footer-heading" class="sr-only">Footer</h2>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="border-t border-gray-200 py-20">
+          <div
+            class="
+              grid grid-cols-1
+              md:grid-cols-12 md:grid-flow-col
+              md:gap-x-8 md:gap-y-16
+              md:auto-rows-min
+            "
+          >
+            <!-- Image section -->
+            <div class="col-span-1 md:col-span-2 lg:row-start-1 lg:col-start-1">
+              <img
+                src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
+                alt=""
+                class="h-8 w-auto"
+              />
+            </div>
+
+            <!-- Sitemap sections -->
+            <div
+              class="
+                mt-10
+                col-span-6
+                grid grid-cols-2
+                gap-8
+                sm:grid-cols-3
+                md:mt-0
+                md:row-start-1
+                md:col-start-3 md:col-span-8
+                lg:col-start-2 lg:col-span-6
+              "
+            >
+              <div
+                class="
+                  grid grid-cols-1
+                  gap-y-12
+                  sm:col-span-2
+                  sm:grid-cols-2
+                  sm:gap-x-8
+                "
+              >
+                <div>
+                  <h3 class="text-sm font-medium text-gray-900">Products</h3>
+                  <ul role="list" class="mt-6 space-y-6">
+                    <li
+                      v-for="item in footerNavigation.products"
+                      :key="item.name"
+                      class="text-sm"
+                    >
+                      <a
+                        :href="item.href"
+                        class="text-gray-500 hover:text-gray-600"
+                      >
+                        {{ item.name }}
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 class="text-sm font-medium text-gray-900">Company</h3>
+                  <ul role="list" class="mt-6 space-y-6">
+                    <li
+                      v-for="item in footerNavigation.company"
+                      :key="item.name"
+                      class="text-sm"
+                    >
+                      <a
+                        :href="item.href"
+                        class="text-gray-500 hover:text-gray-600"
+                      >
+                        {{ item.name }}
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div>
+                <h3 class="text-sm font-medium text-gray-900">
+                  Customer Service
+                </h3>
+                <ul role="list" class="mt-6 space-y-6">
+                  <li
+                    v-for="item in footerNavigation.customerService"
+                    :key="item.name"
+                    class="text-sm"
+                  >
+                    <a
+                      :href="item.href"
+                      class="text-gray-500 hover:text-gray-600"
+                    >
+                      {{ item.name }}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Newsletter section -->
+            <div
+              class="
+                mt-12
+                md:mt-0
+                md:row-start-2
+                md:col-start-3 md:col-span-8
+                lg:row-start-1
+                lg:col-start-9 lg:col-span-4
+              "
+            >
+              <h3 class="text-sm font-medium text-gray-900">
+                Sign up for our newsletter
+              </h3>
+              <p class="mt-6 text-sm text-gray-500">
+                The latest deals and savings, sent to your inbox weekly.
+              </p>
+              <form class="mt-2 flex sm:max-w-md">
+                <label for="email-address" class="sr-only">Email address</label>
+                <input
+                  id="email-address"
+                  type="text"
+                  autocomplete="email"
+                  required=""
+                  class="
+                    appearance-none
+                    min-w-0
+                    w-full
+                    bg-white
+                    border border-gray-300
+                    rounded-md
+                    shadow-sm
+                    py-2
+                    px-4
+                    text-base text-gray-900
+                    placeholder-gray-500
+                    focus:outline-none
+                    focus:border-indigo-500
+                    focus:ring-1 focus:ring-indigo-500
+                  "
+                />
+                <div class="ml-4 flex-shrink-0">
+                  <button
+                    type="submit"
+                    class="
+                      w-full
+                      bg-indigo-600
+                      border border-transparent
+                      rounded-md
+                      shadow-sm
+                      py-2
+                      px-4
+                      flex
+                      items-center
+                      justify-center
+                      text-base
+                      font-medium
+                      text-white
+                      hover:bg-indigo-700
+                      focus:outline-none
+                      focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+                    "
+                  >
+                    Sign up
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-gray-100 py-10 text-center">
+          <p class="text-sm text-gray-500">
+            &copy; 2021 Workflow, Inc. All rights reserved.
+          </p>
         </div>
       </div>
-    </div>
+    </footer>
   </div>
 </template>
 
-<style scoped>
-.bg-gray-100 {
-  background-color: #f7fafc;
-  background-color: rgba(247, 250, 252, var(--tw-bg-opacity));
-}
-
-.border-gray-200 {
-  border-color: #edf2f7;
-  border-color: rgba(237, 242, 247, var(--tw-border-opacity));
-}
-
-.text-gray-400 {
-  color: #cbd5e0;
-  color: rgba(203, 213, 224, var(--tw-text-opacity));
-}
-
-.text-gray-500 {
-  color: #a0aec0;
-  color: rgba(160, 174, 192, var(--tw-text-opacity));
-}
-
-.text-gray-600 {
-  color: #718096;
-  color: rgba(113, 128, 150, var(--tw-text-opacity));
-}
-
-.text-gray-700 {
-  color: #4a5568;
-  color: rgba(74, 85, 104, var(--tw-text-opacity));
-}
-
-.text-gray-900 {
-  color: #1a202c;
-  color: rgba(26, 32, 44, var(--tw-text-opacity));
-}
-
-@media (prefers-color-scheme: dark) {
-  .dark\:bg-gray-800 {
-    background-color: #2d3748;
-    background-color: rgba(45, 55, 72, var(--tw-bg-opacity));
-  }
-
-  .dark\:bg-gray-900 {
-    background-color: #1a202c;
-    background-color: rgba(26, 32, 44, var(--tw-bg-opacity));
-  }
-
-  .dark\:border-gray-700 {
-    border-color: #4a5568;
-    border-color: rgba(74, 85, 104, var(--tw-border-opacity));
-  }
-
-  .dark\:text-white {
-    color: #fff;
-    color: rgba(255, 255, 255, var(--tw-text-opacity));
-  }
-
-  .dark\:text-gray-400 {
-    color: #cbd5e0;
-    color: rgba(203, 213, 224, var(--tw-text-opacity));
-  }
-}
-</style>
-
 <script>
-import { defineComponent } from "vue";
+import { ref, defineComponent } from "vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
+import {
+  Dialog,
+  DialogOverlay,
+  Popover,
+  PopoverButton,
+  PopoverGroup,
+  PopoverPanel,
+  Tab,
+  TabGroup,
+  TabList,
+  TabPanel,
+  TabPanels,
+  TransitionChild,
+  TransitionRoot,
+} from "@headlessui/vue";
+import {
+  MenuIcon,
+  QuestionMarkCircleIcon,
+  SearchIcon,
+  ShoppingBagIcon,
+  XIcon,
+} from "@heroicons/vue/outline";
+
+const currencies = ["CAD", "USD", "AUD", "EUR", "GBP"];
+const navigation = {
+  categories: [
+    {
+      name: "Women",
+      featured: [
+        {
+          name: "New Arrivals",
+          href: "#",
+          imageSrc:
+            "https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg",
+          imageAlt:
+            "Models sitting back to back, wearing Basic Tee in black and bone.",
+        },
+        {
+          name: "Basic Tees",
+          href: "#",
+          imageSrc:
+            "https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg",
+          imageAlt:
+            "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
+        },
+        {
+          name: "Accessories",
+          href: "#",
+          imageSrc:
+            "https://tailwindui.com/img/ecommerce-images/mega-menu-category-03.jpg",
+          imageAlt:
+            "Model wearing minimalist watch with black wristband and white watch face.",
+        },
+        {
+          name: "Carry",
+          href: "#",
+          imageSrc:
+            "https://tailwindui.com/img/ecommerce-images/mega-menu-category-04.jpg",
+          imageAlt:
+            "Model opening tan leather long wallet with credit card pockets and cash pouch.",
+        },
+      ],
+    },
+    {
+      name: "Men",
+      featured: [
+        {
+          name: "New Arrivals",
+          href: "#",
+          imageSrc:
+            "https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg",
+          imageAlt:
+            "Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.",
+        },
+        {
+          name: "Basic Tees",
+          href: "#",
+          imageSrc:
+            "https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-02.jpg",
+          imageAlt: "Model wearing light heather gray t-shirt.",
+        },
+        {
+          name: "Accessories",
+          href: "#",
+          imageSrc:
+            "https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-03.jpg",
+          imageAlt:
+            "Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body.",
+        },
+        {
+          name: "Carry",
+          href: "#",
+          imageSrc:
+            "https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-04.jpg",
+          imageAlt:
+            "Model putting folded cash into slim card holder olive leather wallet with hand stitching.",
+        },
+      ],
+    },
+  ],
+  pages: [
+    { name: "Company", href: "#" },
+    { name: "Stores", href: "#" },
+  ],
+};
+const collections = [
+  {
+    name: "Women's",
+    href: "#",
+    imageSrc:
+      "https://tailwindui.com/img/ecommerce-images/home-page-04-collection-01.jpg",
+    imageAlt: "Woman wearing a comfortable cotton t-shirt.",
+  },
+  {
+    name: "Men's",
+    href: "#",
+    imageSrc:
+      "https://tailwindui.com/img/ecommerce-images/home-page-04-collection-02.jpg",
+    imageAlt: "Man wearing a comfortable and casual cotton t-shirt.",
+  },
+  {
+    name: "Desk Accessories",
+    href: "#",
+    imageSrc:
+      "https://tailwindui.com/img/ecommerce-images/home-page-04-collection-03.jpg",
+    imageAlt:
+      "Person sitting at a wooden desk with paper note organizer, pencil and tablet.",
+  },
+];
+const trendingProducts = [
+  {
+    id: 1,
+    name: "Leather Long Wallet",
+    color: "Natural",
+    price: "$75",
+    href: "#",
+    imageSrc:
+      "https://tailwindui.com/img/ecommerce-images/home-page-04-trending-product-02.jpg",
+    imageAlt: "Hand stitched, orange leather long wallet.",
+  },
+  // More products...
+];
+const perks = [
+  {
+    name: "Free returns",
+    imageUrl:
+      "https://tailwindui.com/img/ecommerce/icons/icon-returns-light.svg",
+    description:
+      "Not what you expected? Place it back in the parcel and attach the pre-paid postage stamp.",
+  },
+  {
+    name: "Same day delivery",
+    imageUrl:
+      "https://tailwindui.com/img/ecommerce/icons/icon-calendar-light.svg",
+    description:
+      "We offer a delivery service that has never been done before. Checkout today and receive your products within hours.",
+  },
+  {
+    name: "All year discount",
+    imageUrl:
+      "https://tailwindui.com/img/ecommerce/icons/icon-gift-card-light.svg",
+    description:
+      'Looking for a deal? You can use the code "ALLYEAR" at checkout and get money off all year round.',
+  },
+  {
+    name: "For the planet",
+    imageUrl:
+      "https://tailwindui.com/img/ecommerce/icons/icon-planet-light.svg",
+    description:
+      "We’ve pledged 1% of sales to the preservation and restoration of the natural environment.",
+  },
+];
+const footerNavigation = {
+  products: [
+    { name: "Bags", href: "#" },
+    { name: "Tees", href: "#" },
+    { name: "Objects", href: "#" },
+    { name: "Home Goods", href: "#" },
+    { name: "Accessories", href: "#" },
+  ],
+  company: [
+    { name: "Who we are", href: "#" },
+    { name: "Sustainability", href: "#" },
+    { name: "Press", href: "#" },
+    { name: "Careers", href: "#" },
+    { name: "Terms & Conditions", href: "#" },
+    { name: "Privacy", href: "#" },
+  ],
+  customerService: [
+    { name: "Contact", href: "#" },
+    { name: "Shipping", href: "#" },
+    { name: "Returns", href: "#" },
+    { name: "Warranty", href: "#" },
+    { name: "Secure Payments", href: "#" },
+    { name: "FAQ", href: "#" },
+    { name: "Find a store", href: "#" },
+  ],
+};
 
 export default defineComponent({
   components: {
-    Head,
-    Link,
+    Dialog,
+    DialogOverlay,
+    Popover,
+    PopoverButton,
+    PopoverGroup,
+    PopoverPanel,
+    Tab,
+    TabGroup,
+    TabList,
+    TabPanel,
+    TabPanels,
+    TransitionChild,
+    TransitionRoot,
+    MenuIcon,
+    QuestionMarkCircleIcon,
+    SearchIcon,
+    ShoppingBagIcon,
+    XIcon,
   },
 
   props: {
@@ -379,6 +1306,20 @@ export default defineComponent({
     canRegister: Boolean,
     laravelVersion: String,
     phpVersion: String,
+  },
+
+  setup() {
+    const open = ref(false);
+
+    return {
+      currencies,
+      navigation,
+      collections,
+      trendingProducts,
+      perks,
+      footerNavigation,
+      open,
+    };
   },
 });
 </script>
