@@ -800,7 +800,7 @@
 
       <section
         aria-labelledby="perks-heading"
-        class="bg-gray-50 border-t border-gray-200"
+        class="bg-gray-50 border-t border-gray-200 hidden"
       >
         <h2 id="perks-heading" class="sr-only">Our perks</h2>
 
@@ -975,7 +975,7 @@ import {
   XIcon,
 } from "@heroicons/vue/outline";
 
-const currencies = ["全球", "中國大陸", "韓國", "美國", "日本"];
+const currencies = ["全球"];
 const navigation = {
   categories: [
     {
@@ -1079,15 +1079,14 @@ const perks = [
 ];
 const footerNavigation = {
   company: [
-    { name: "我們是誰", href: "#" },
-    { name: "加入我們", href: "#" },
-    { name: "東方極速條款", href: "#" },
-    { name: "隱私權政策", href: "#" },
+    { name: "關於東方極速", href: route("about.show") },
+    { name: "東方極速條款", href: route("terms.show") },
+    { name: "隱私權政策", href: route("policy.show") },
   ],
   customerService: [
-    { name: "常見問題", href: "#" },
-    { name: "退貨退款", href: "#" },
-    { name: "聯絡客服", href: "#" },
+    { name: "常見問題", href: route("faq.show") },
+    // { name: "退貨退款", href: "#" },
+    // { name: "聯絡客服", href: "#" },
   ],
 };
 

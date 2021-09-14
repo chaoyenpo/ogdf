@@ -1,5 +1,5 @@
 <template>
-  <Head title="隱私權政策" />
+  <Head title="常見問題" />
 
   <div class="font-sans text-gray-900 antialiased">
     <div class="pt-4 bg-gray-100">
@@ -9,7 +9,7 @@
         </div>
 
         <div
-          v-html="policy"
+          v-html="faq"
           class="
             w-full
             sm:max-w-2xl
@@ -33,7 +33,7 @@ import { Head } from "@inertiajs/inertia-vue3";
 import JetAuthenticationCardLogo from "@/Jetstream/AuthenticationCardLogo.vue";
 
 export default defineComponent({
-  props: ["policy"],
+  props: ["faq"],
 
   components: {
     Head,
