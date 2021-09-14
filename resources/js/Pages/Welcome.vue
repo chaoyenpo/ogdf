@@ -1,4 +1,6 @@
 <template>
+  <Head title="東方極速購物" />
+
   <div class="bg-white">
     <!-- Mobile menu -->
     <TransitionRoot as="template" :show="open">
@@ -72,7 +74,7 @@
                     <button
                       :class="[
                         selected
-                          ? 'text-indigo-600 border-indigo-600'
+                          ? 'text-green-600 border-green-600'
                           : 'text-gray-900 border-transparent',
                         'flex-1 whitespace-nowrap py-4 px-1 border-b-2 text-base font-medium',
                       ]"
@@ -120,7 +122,7 @@
                         {{ item.name }}
                       </a>
                       <p aria-hidden="true" class="mt-1 text-sm text-gray-500">
-                        Shop now
+                        立即選購
                       </p>
                     </div>
                   </div>
@@ -145,12 +147,12 @@
             <div class="border-t border-gray-200 py-6 px-4 space-y-6">
               <div class="flow-root">
                 <a href="#" class="-m-2 p-2 block font-medium text-gray-900"
-                  >Create an account</a
+                  >免費註冊</a
                 >
               </div>
               <div class="flow-root">
                 <a href="#" class="-m-2 p-2 block font-medium text-gray-900"
-                  >Sign in</a
+                  >登入</a
                 >
               </div>
             </div>
@@ -318,16 +320,20 @@
             </form>
 
             <div class="flex items-center space-x-6">
-              <a
-                href="#"
+              <Link
+                :href="route('login')"
                 class="text-sm font-medium text-white hover:text-gray-100"
-                >Sign in</a
               >
-              <a
-                href="#"
+                登入
+              </Link>
+
+              <Link
+                v-if="canRegister"
+                :href="route('register')"
                 class="text-sm font-medium text-white hover:text-gray-100"
-                >Create an account</a
               >
+                免費註冊
+              </Link>
             </div>
           </div>
         </div>
@@ -339,12 +345,8 @@
               <!-- Logo (lg+) -->
               <div class="hidden lg:flex-1 lg:flex lg:items-center">
                 <a href="#">
-                  <span class="sr-only">Workflow</span>
-                  <img
-                    class="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
-                    alt=""
-                  />
+                  <span class="sr-only">Tea Fun Fast</span>
+                  <img class="h-8 w-auto" src="/images/logo.png" alt="" />
                 </a>
               </div>
 
@@ -362,7 +364,7 @@
                         <PopoverButton
                           :class="[
                             open
-                              ? 'text-indigo-600'
+                              ? 'text-green-600'
                               : 'text-gray-700 hover:text-gray-800',
                             'relative flex items-center justify-center transition-colors ease-out duration-200 text-sm font-medium',
                           ]"
@@ -370,7 +372,7 @@
                           {{ category.name }}
                           <span
                             :class="[
-                              open ? 'bg-indigo-600' : '',
+                              open ? 'bg-green-600' : '',
                               'absolute z-20 -bottom-px inset-x-0 h-0.5 transition ease-out duration-200',
                             ]"
                             aria-hidden="true"
@@ -458,7 +460,7 @@
                                     {{ item.name }}
                                   </a>
                                   <p aria-hidden="true" class="mt-1">
-                                    Shop now
+                                    立即選購
                                   </p>
                                 </div>
                               </div>
@@ -496,64 +498,16 @@
                   <span class="sr-only">Open menu</span>
                   <MenuIcon class="h-6 w-6" aria-hidden="true" />
                 </button>
-
-                <!-- Search -->
-                <a href="#" class="ml-2 p-2 text-gray-400 hover:text-gray-500">
-                  <span class="sr-only">Search</span>
-                  <SearchIcon class="w-6 h-6" aria-hidden="true" />
-                </a>
               </div>
 
               <!-- Logo (lg-) -->
               <a href="#" class="lg:hidden">
-                <span class="sr-only">Workflow</span>
-                <img
-                  src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
-                  alt=""
-                  class="h-8 w-auto"
-                />
+                <span class="sr-only">Tea Fun Fast</span>
+                <img src="images/logo.png" alt="" class="h-8 w-auto" />
               </a>
 
               <div class="flex-1 flex items-center justify-end">
-                <a
-                  href="#"
-                  class="
-                    hidden
-                    text-sm
-                    font-medium
-                    text-gray-700
-                    hover:text-gray-800
-                    lg:block
-                  "
-                >
-                  Search
-                </a>
-
                 <div class="flex items-center lg:ml-8">
-                  <!-- Help -->
-                  <a
-                    href="#"
-                    class="p-2 text-gray-400 hover:text-gray-500 lg:hidden"
-                  >
-                    <span class="sr-only">Help</span>
-                    <QuestionMarkCircleIcon
-                      class="w-6 h-6"
-                      aria-hidden="true"
-                    />
-                  </a>
-                  <a
-                    href="#"
-                    class="
-                      hidden
-                      text-sm
-                      font-medium
-                      text-gray-700
-                      hover:text-gray-800
-                      lg:block
-                    "
-                    >Help</a
-                  >
-
                   <!-- Cart -->
                   <div class="ml-4 flow-root lg:ml-8">
                     <a href="#" class="group -m-2 p-2 flex items-center">
@@ -599,7 +553,7 @@
           <div class="flex-1 relative w-full bg-gray-800">
             <div class="absolute inset-0 overflow-hidden">
               <img
-                src="https://tailwindui.com/img/ecommerce-images/home-page-04-hero-full-width.jpg"
+                src="https://images.unsplash.com/photo-1515365389034-da2da8678c14?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=928&q=80"
                 alt=""
                 class="w-full h-full object-center object-cover"
               />
@@ -650,23 +604,35 @@
                 md:text-6xl
               "
             >
-              Mid-Season Sale
+              TEA FUN FAST
+            </h1>
+            <h1
+              class="
+                text-4xl
+                font-extrabold
+                tracking-tight
+                text-white
+                sm:text-5xl
+                md:text-6xl
+              "
+            >
+              慶開幕全館免運
             </h1>
             <div class="mt-4 sm:mt-6">
               <a
                 href="#"
                 class="
                   inline-block
-                  bg-indigo-600
+                  bg-green-600
                   border border-transparent
                   rounded-md
                   py-3
                   px-8
                   font-medium
                   text-white
-                  hover:bg-indigo-700
+                  hover:bg-green-700
                 "
-                >Shop Collection</a
+                >搶購去</a
               >
             </div>
           </div>
@@ -738,9 +704,7 @@
                 </div>
                 <div class="absolute inset-0 rounded-lg p-6 flex items-end">
                   <div>
-                    <p aria-hidden="true" class="text-sm text-white">
-                      Shop the collection
-                    </p>
+                    <p aria-hidden="true" class="text-sm text-white">這裡找</p>
                     <h3 class="mt-1 font-semibold text-white">
                       <a :href="collection.href">
                         <span class="absolute inset-0" />
@@ -764,7 +728,7 @@
               id="favorites-heading"
               class="text-2xl font-extrabold tracking-tight text-gray-900"
             >
-              Trending Products
+              熱賣商品
             </h2>
             <a
               href="#"
@@ -772,11 +736,11 @@
                 hidden
                 text-sm
                 font-medium
-                text-indigo-600
-                hover:text-indigo-500
+                text-green-600
+                hover:text-green-500
                 md:block
               "
-              >Shop the collection<span aria-hidden="true"> &rarr;</span></a
+              >探索所有熱賣商品<span aria-hidden="true"> &rarr;</span></a
             >
           </div>
 
@@ -827,9 +791,7 @@
           </div>
 
           <div class="mt-8 text-sm md:hidden">
-            <a
-              href="#"
-              class="font-medium text-indigo-600 hover:text-indigo-500"
+            <a href="#" class="font-medium text-green-600 hover:text-green-500"
               >Shop the collection<span aria-hidden="true"> &rarr;</span></a
             >
           </div>
@@ -910,11 +872,7 @@
           >
             <!-- Image section -->
             <div class="col-span-1 md:col-span-2 lg:row-start-1 lg:col-start-1">
-              <img
-                src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
-                alt=""
-                class="h-8 w-auto"
-              />
+              <img src="/images/logo.png" alt="" class="h-8 w-auto" />
             </div>
 
             <!-- Sitemap sections -->
@@ -928,7 +886,7 @@
                 md:mt-0
                 md:row-start-1
                 md:col-start-3 md:col-span-8
-                lg:col-start-2 lg:col-span-6
+                lg:col-start-3 lg:col-span-6
               "
             >
               <div
@@ -941,10 +899,10 @@
                 "
               >
                 <div>
-                  <h3 class="text-sm font-medium text-gray-900">Products</h3>
+                  <h3 class="text-sm font-medium text-gray-900">客戶服務</h3>
                   <ul role="list" class="mt-6 space-y-6">
                     <li
-                      v-for="item in footerNavigation.products"
+                      v-for="item in footerNavigation.customerService"
                       :key="item.name"
                       class="text-sm"
                     >
@@ -958,7 +916,9 @@
                   </ul>
                 </div>
                 <div>
-                  <h3 class="text-sm font-medium text-gray-900">Company</h3>
+                  <h3 class="text-sm font-medium text-gray-900">
+                    關於東方極速
+                  </h3>
                   <ul role="list" class="mt-6 space-y-6">
                     <li
                       v-for="item in footerNavigation.company"
@@ -975,101 +935,13 @@
                   </ul>
                 </div>
               </div>
-              <div>
-                <h3 class="text-sm font-medium text-gray-900">
-                  Customer Service
-                </h3>
-                <ul role="list" class="mt-6 space-y-6">
-                  <li
-                    v-for="item in footerNavigation.customerService"
-                    :key="item.name"
-                    class="text-sm"
-                  >
-                    <a
-                      :href="item.href"
-                      class="text-gray-500 hover:text-gray-600"
-                    >
-                      {{ item.name }}
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- Newsletter section -->
-            <div
-              class="
-                mt-12
-                md:mt-0
-                md:row-start-2
-                md:col-start-3 md:col-span-8
-                lg:row-start-1
-                lg:col-start-9 lg:col-span-4
-              "
-            >
-              <h3 class="text-sm font-medium text-gray-900">
-                Sign up for our newsletter
-              </h3>
-              <p class="mt-6 text-sm text-gray-500">
-                The latest deals and savings, sent to your inbox weekly.
-              </p>
-              <form class="mt-2 flex sm:max-w-md">
-                <label for="email-address" class="sr-only">Email address</label>
-                <input
-                  id="email-address"
-                  type="text"
-                  autocomplete="email"
-                  required=""
-                  class="
-                    appearance-none
-                    min-w-0
-                    w-full
-                    bg-white
-                    border border-gray-300
-                    rounded-md
-                    shadow-sm
-                    py-2
-                    px-4
-                    text-base text-gray-900
-                    placeholder-gray-500
-                    focus:outline-none
-                    focus:border-indigo-500
-                    focus:ring-1 focus:ring-indigo-500
-                  "
-                />
-                <div class="ml-4 flex-shrink-0">
-                  <button
-                    type="submit"
-                    class="
-                      w-full
-                      bg-indigo-600
-                      border border-transparent
-                      rounded-md
-                      shadow-sm
-                      py-2
-                      px-4
-                      flex
-                      items-center
-                      justify-center
-                      text-base
-                      font-medium
-                      text-white
-                      hover:bg-indigo-700
-                      focus:outline-none
-                      focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
-                    "
-                  >
-                    Sign up
-                  </button>
-                </div>
-              </form>
             </div>
           </div>
         </div>
 
         <div class="border-t border-gray-100 py-10 text-center">
           <p class="text-sm text-gray-500">
-            &copy; 2021 Workflow, Inc. All rights reserved.
+            &copy; 2021 Tea Fun Fast. 版權所有。
           </p>
         </div>
       </div>
@@ -1103,108 +975,64 @@ import {
   XIcon,
 } from "@heroicons/vue/outline";
 
-const currencies = ["CAD", "USD", "AUD", "EUR", "GBP"];
+const currencies = ["全球", "中國大陸", "韓國", "美國", "日本"];
 const navigation = {
   categories: [
     {
-      name: "Women",
+      name: "茶類",
       featured: [
         {
-          name: "New Arrivals",
+          name: "茶葉",
           href: "#",
           imageSrc:
-            "https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg",
+            "https://7teahouse.com/sites/default/files/styles/ad_taxonomy/public/taxonomy/product_ad/1231.jpg?itok=E-NIH6BN",
           imageAlt:
             "Models sitting back to back, wearing Basic Tee in black and bone.",
         },
         {
-          name: "Basic Tees",
+          name: "茶包",
           href: "#",
           imageSrc:
-            "https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg",
+            "https://7teahouse.com/sites/default/files/styles/ad_taxonomy/public/taxonomy/product_ad/%E8%8C%B6%E5%8C%851.jpg?itok=6Vrx8PYO",
           imageAlt:
             "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
         },
         {
-          name: "Accessories",
+          name: "禮盒",
           href: "#",
           imageSrc:
-            "https://tailwindui.com/img/ecommerce-images/mega-menu-category-03.jpg",
+            "https://7teahouse.com/sites/default/files/styles/ad_taxonomy/public/taxonomy/product_ad/220x260.jpg?itok=OxciHeuM",
           imageAlt:
             "Model wearing minimalist watch with black wristband and white watch face.",
-        },
-        {
-          name: "Carry",
-          href: "#",
-          imageSrc:
-            "https://tailwindui.com/img/ecommerce-images/mega-menu-category-04.jpg",
-          imageAlt:
-            "Model opening tan leather long wallet with credit card pockets and cash pouch.",
-        },
-      ],
-    },
-    {
-      name: "Men",
-      featured: [
-        {
-          name: "New Arrivals",
-          href: "#",
-          imageSrc:
-            "https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg",
-          imageAlt:
-            "Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.",
-        },
-        {
-          name: "Basic Tees",
-          href: "#",
-          imageSrc:
-            "https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-02.jpg",
-          imageAlt: "Model wearing light heather gray t-shirt.",
-        },
-        {
-          name: "Accessories",
-          href: "#",
-          imageSrc:
-            "https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-03.jpg",
-          imageAlt:
-            "Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body.",
-        },
-        {
-          name: "Carry",
-          href: "#",
-          imageSrc:
-            "https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-04.jpg",
-          imageAlt:
-            "Model putting folded cash into slim card holder olive leather wallet with hand stitching.",
         },
       ],
     },
   ],
   pages: [
-    { name: "Company", href: "#" },
-    { name: "Stores", href: "#" },
+    { name: "香皂", href: "#" },
+    { name: "蠟燭", href: "#" },
   ],
 };
 const collections = [
   {
-    name: "Women's",
+    name: "茶類",
     href: "#",
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/home-page-04-collection-01.jpg",
+      "https://images.unsplash.com/photo-1543060895-03f57478a710?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=935&q=80",
     imageAlt: "Woman wearing a comfortable cotton t-shirt.",
   },
   {
-    name: "Men's",
+    name: "香皂",
     href: "#",
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/home-page-04-collection-02.jpg",
+      "https://images.unsplash.com/photo-1605264964528-06403738d6dc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80",
     imageAlt: "Man wearing a comfortable and casual cotton t-shirt.",
   },
   {
-    name: "Desk Accessories",
+    name: "蠟燭",
     href: "#",
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/home-page-04-collection-03.jpg",
+      "https://images.unsplash.com/photo-1619695662967-3e739a597f47?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=934&q=80",
     imageAlt:
       "Person sitting at a wooden desk with paper note organizer, pencil and tablet.",
   },
@@ -1212,75 +1040,61 @@ const collections = [
 const trendingProducts = [
   {
     id: 1,
-    name: "Leather Long Wallet",
-    color: "Natural",
-    price: "$75",
+    name: "三峽碧螺春",
+    color: "一根樹枝",
+    price: "$320",
     href: "#",
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/home-page-04-trending-product-02.jpg",
+      "https://7teahouse.com/sites/default/files/styles/vt_commerce_image_large/public/product/_G108423_0.JPG?itok=EPSki057",
     imageAlt: "Hand stitched, orange leather long wallet.",
   },
   // More products...
 ];
 const perks = [
   {
-    name: "Free returns",
+    name: "免費退貨",
     imageUrl:
       "https://tailwindui.com/img/ecommerce/icons/icon-returns-light.svg",
-    description:
-      "Not what you expected? Place it back in the parcel and attach the pre-paid postage stamp.",
+    description: "不是你所期望的？將其放回包裹中並貼上預付郵票。",
   },
   {
-    name: "Same day delivery",
+    name: "當天發貨",
     imageUrl:
       "https://tailwindui.com/img/ecommerce/icons/icon-calendar-light.svg",
     description:
-      "We offer a delivery service that has never been done before. Checkout today and receive your products within hours.",
+      "我們提供前所未有的送貨服務。立即結帳並在數小時內收到您的產品。",
   },
   {
-    name: "All year discount",
+    name: "全年折扣",
     imageUrl:
       "https://tailwindui.com/img/ecommerce/icons/icon-gift-card-light.svg",
-    description:
-      'Looking for a deal? You can use the code "ALLYEAR" at checkout and get money off all year round.',
+    description: '您可以在結帳時使用代碼"TEA FUN FAST"，全年均可享受折扣。',
   },
   {
-    name: "For the planet",
+    name: "為了這個星球",
     imageUrl:
       "https://tailwindui.com/img/ecommerce/icons/icon-planet-light.svg",
-    description:
-      "We’ve pledged 1% of sales to the preservation and restoration of the natural environment.",
+    description: "我們承諾將銷售額的 1% 用於保護和恢復自然環境。",
   },
 ];
 const footerNavigation = {
-  products: [
-    { name: "Bags", href: "#" },
-    { name: "Tees", href: "#" },
-    { name: "Objects", href: "#" },
-    { name: "Home Goods", href: "#" },
-    { name: "Accessories", href: "#" },
-  ],
   company: [
-    { name: "Who we are", href: "#" },
-    { name: "Sustainability", href: "#" },
-    { name: "Press", href: "#" },
-    { name: "Careers", href: "#" },
-    { name: "Terms & Conditions", href: "#" },
-    { name: "Privacy", href: "#" },
+    { name: "我們是誰", href: "#" },
+    { name: "加入我們", href: "#" },
+    { name: "東方極速條款", href: "#" },
+    { name: "隱私權政策", href: "#" },
   ],
   customerService: [
-    { name: "Contact", href: "#" },
-    { name: "Shipping", href: "#" },
-    { name: "Returns", href: "#" },
-    { name: "Warranty", href: "#" },
-    { name: "Secure Payments", href: "#" },
-    { name: "FAQ", href: "#" },
-    { name: "Find a store", href: "#" },
+    { name: "常見問題", href: "#" },
+    { name: "退貨退款", href: "#" },
+    { name: "聯絡客服", href: "#" },
   ],
 };
 
 export default defineComponent({
   components: {
+    Head,
+    Link,
     Dialog,
     DialogOverlay,
     Popover,
