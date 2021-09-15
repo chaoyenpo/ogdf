@@ -340,7 +340,7 @@
         </div>
 
         <!-- Secondary navigation -->
-        <div class="bg-white">
+        <div class="bg-white border-b border-gray-200">
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="h-16 flex items-center justify-between">
               <!-- Logo (lg+) -->
@@ -404,26 +404,6 @@
                             class="absolute inset-0 top-1/2 bg-white shadow"
                             aria-hidden="true"
                           />
-                          <!-- Fake border when menu is open -->
-                          <div
-                            class="
-                              absolute
-                              inset-0
-                              top-0
-                              h-px
-                              max-w-7xl
-                              mx-auto
-                              px-8
-                            "
-                            aria-hidden="true"
-                          >
-                            <div
-                              :class="[
-                                open ? 'bg-gray-200' : 'bg-transparent',
-                                'w-full h-px transition-colors ease-out duration-200',
-                              ]"
-                            />
-                          </div>
 
                           <div class="relative">
                             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -549,10 +529,13 @@
     </main>
 
     <!-- Footer Content -->
-    <footer aria-labelledby="footer-heading" class="bg-gray-50">
+    <footer
+      aria-labelledby="footer-heading"
+      class="bg-gray-50 border-t border-gray-200"
+    >
       <h2 id="footer-heading" class="sr-only">Footer</h2>
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="border-t border-gray-200 py-20">
+        <div class="py-20">
           <div
             class="
               grid grid-cols-1
