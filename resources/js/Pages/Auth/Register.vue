@@ -1,77 +1,77 @@
 <template>
-  <Head title="註冊" />
+  <welcome-layout title="註冊">
+    <jet-authentication-card>
+      <template #logo>
+        <jet-authentication-card-logo />
+      </template>
 
-  <jet-authentication-card>
-    <template #logo>
-      <jet-authentication-card-logo />
-    </template>
+      <jet-validation-errors class="mb-4" />
 
-    <jet-validation-errors class="mb-4" />
+      <form @submit.prevent="submit">
+        <div>
+          <jet-label for="phone" value="手機號碼" />
+          <jet-input
+            id="phone"
+            type="text"
+            class="mt-1 block w-full"
+            v-model="form.phone"
+            required
+            autofocus
+            autocomplete="phone"
+          />
+        </div>
 
-    <form @submit.prevent="submit">
-      <div>
-        <jet-label for="phone" value="手機號碼" />
-        <jet-input
-          id="phone"
-          type="text"
-          class="mt-1 block w-full"
-          v-model="form.phone"
-          required
-          autofocus
-          autocomplete="phone"
-        />
-      </div>
+        <div
+          class="mt-4"
+          v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature"
+        >
+          <jet-label for="terms">
+            <div class="flex items-center">
+              <jet-checkbox
+                name="terms"
+                id="terms"
+                v-model:checked="form.terms"
+              />
 
-      <div
-        class="mt-4"
-        v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature"
-      >
-        <jet-label for="terms">
-          <div class="flex items-center">
-            <jet-checkbox
-              name="terms"
-              id="terms"
-              v-model:checked="form.terms"
-            />
-
-            <div class="ml-2">
-              我同意
-              <a
-                target="_blank"
-                :href="route('terms.show')"
-                class="underline text-sm text-gray-600 hover:text-gray-900"
-                >東方極速條款</a
-              >
-              和
-              <a
-                target="_blank"
-                :href="route('policy.show')"
-                class="underline text-sm text-gray-600 hover:text-gray-900"
-                >隱私權政策</a
-              >
+              <div class="ml-2">
+                我同意
+                <a
+                  target="_blank"
+                  :href="route('terms.show')"
+                  class="underline text-sm text-gray-600 hover:text-gray-900"
+                  >東方極速條款</a
+                >
+                和
+                <a
+                  target="_blank"
+                  :href="route('policy.show')"
+                  class="underline text-sm text-gray-600 hover:text-gray-900"
+                  >隱私權政策</a
+                >
+              </div>
             </div>
-          </div>
-        </jet-label>
-      </div>
+          </jet-label>
+        </div>
 
-      <div class="flex items-center justify-end mt-4">
-        <Link
-          :href="route('login')"
-          class="underline text-sm text-gray-600 hover:text-gray-900"
-        >
-          已經有帳號了嗎？
-        </Link>
+        <div class="flex items-center justify-end mt-4">
+          <Link
+            :href="route('login')"
+            class="underline text-sm text-gray-600 hover:text-gray-900"
+          >
+            已經有帳號了嗎？
+          </Link>
 
-        <jet-button
-          class="ml-4"
-          :class="{ 'opacity-25': form.processing }"
-          :disabled="form.processing"
-        >
-          下一步
-        </jet-button>
-      </div>
-    </form>
-  </jet-authentication-card>
+          <jet-button
+            class="ml-4"
+            :class="{ 'opacity-25': form.processing }"
+            :disabled="form.processing"
+          >
+            下一步
+          </jet-button>
+        </div>
+      </form>
+    </jet-authentication-card>
+  </welcome-layout>
 </template>
 
 <script>
@@ -83,11 +83,12 @@ import JetInput from "@/Jetstream/Input.vue";
 import JetCheckbox from "@/Jetstream/Checkbox.vue";
 import JetLabel from "@/Jetstream/Label.vue";
 import JetValidationErrors from "@/Jetstream/ValidationErrors.vue";
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Link } from "@inertiajs/inertia-vue3";
+import WelcomeLayout from "@/Layouts/WelcomeLayout.vue";
 
 export default defineComponent({
   components: {
-    Head,
+    WelcomeLayout,
     JetAuthenticationCard,
     JetAuthenticationCardLogo,
     JetButton,

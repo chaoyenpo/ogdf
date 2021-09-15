@@ -13,7 +13,7 @@
           class="
             w-full
             sm:max-w-2xl
-            mt-6
+            my-6
             p-6
             bg-white
             shadow-md

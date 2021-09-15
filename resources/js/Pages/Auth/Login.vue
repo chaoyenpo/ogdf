@@ -1,41 +1,37 @@
 <template>
-  <Head title="Log in" />
+  <welcome-layout title="登入">
+    <jet-authentication-card>
+      <jet-validation-errors class="mb-4" />
 
-  <jet-authentication-card>
-    <template #logo>
-      <jet-authentication-card-logo />
-    </template>
-
-    <jet-validation-errors class="mb-4" />
-
-    <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-      {{ status }}
-    </div>
-
-    <form @submit.prevent="submit">
-      <div>
-        <jet-label for="phone" value="手機號碼" />
-        <jet-input
-          id="phone"
-          type="text"
-          class="mt-1 block w-full"
-          v-model="form.phone"
-          required
-          autofocus
-        />
+      <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+        {{ status }}
       </div>
 
-      <div class="flex items-center justify-end mt-4">
-        <jet-button
-          class="ml-4"
-          :class="{ 'opacity-25': form.processing }"
-          :disabled="form.processing"
-        >
-          下一步
-        </jet-button>
-      </div>
-    </form>
-  </jet-authentication-card>
+      <form @submit.prevent="submit">
+        <div>
+          <jet-label for="phone" value="手機號碼" />
+          <jet-input
+            id="phone"
+            type="text"
+            class="mt-1 block w-full"
+            v-model="form.phone"
+            required
+            autofocus
+          />
+        </div>
+
+        <div class="flex items-center justify-end mt-4">
+          <jet-button
+            class="ml-4"
+            :class="{ 'opacity-25': form.processing }"
+            :disabled="form.processing"
+          >
+            下一步
+          </jet-button>
+        </div>
+      </form>
+    </jet-authentication-card>
+  </welcome-layout>
 </template>
 
 <script>
@@ -47,11 +43,12 @@ import JetInput from "@/Jetstream/Input.vue";
 import JetCheckbox from "@/Jetstream/Checkbox.vue";
 import JetLabel from "@/Jetstream/Label.vue";
 import JetValidationErrors from "@/Jetstream/ValidationErrors.vue";
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Link } from "@inertiajs/inertia-vue3";
+import WelcomeLayout from "@/Layouts/WelcomeLayout.vue";
 
 export default defineComponent({
   components: {
-    Head,
+    WelcomeLayout,
     JetAuthenticationCard,
     JetAuthenticationCardLogo,
     JetButton,

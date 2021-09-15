@@ -345,7 +345,7 @@
             <div class="h-16 flex items-center justify-between">
               <!-- Logo (lg+) -->
               <div class="hidden lg:flex-1 lg:flex lg:items-center">
-                <a href="#">
+                <a href="/">
                   <span class="sr-only">Tea Fun Fast</span>
                   <img class="h-8 w-auto" src="/images/logo.png" alt="" />
                 </a>
@@ -598,6 +598,7 @@
                       class="text-sm"
                     >
                       <a
+                        target="_blank"
                         :href="item.href"
                         class="text-gray-500 hover:text-gray-600"
                       >
@@ -617,6 +618,7 @@
                       class="text-sm"
                     >
                       <a
+                        target="_blank"
                         :href="item.href"
                         class="text-gray-500 hover:text-gray-600"
                       >
