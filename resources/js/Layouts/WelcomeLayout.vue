@@ -148,14 +148,20 @@
 
             <div class="border-t border-gray-200 py-6 px-4 space-y-6">
               <div class="flow-root">
-                <a href="#" class="-m-2 p-2 block font-medium text-gray-900"
-                  >免費註冊</a
+                <Link
+                  :href="route('register')"
+                  class="-m-2 p-2 block font-medium text-gray-900"
                 >
+                  免費註冊
+                </Link>
               </div>
               <div class="flow-root">
-                <a href="#" class="-m-2 p-2 block font-medium text-gray-900"
-                  >登入</a
+                <Link
+                  :href="route('login')"
+                  class="-m-2 p-2 block font-medium text-gray-900"
                 >
+                  登入
+                </Link>
               </div>
             </div>
 
@@ -482,9 +488,9 @@
               </div>
 
               <!-- Logo (lg-) -->
-              <a href="#" class="lg:hidden">
+              <a href="/" class="lg:hidden">
                 <span class="sr-only">Tea Fun Fast</span>
-                <img src="images/logo.png" alt="" class="h-8 w-auto" />
+                <img src="/images/logo.png" alt="" class="h-8 w-auto" />
               </a>
 
               <div class="flex-1 flex items-center justify-end">
@@ -677,7 +683,7 @@ const navigation = {
       featured: [
         {
           name: "茶葉",
-          href: "#",
+          href: "/products",
           imageSrc:
             "https://7teahouse.com/sites/default/files/styles/ad_taxonomy/public/taxonomy/product_ad/1231.jpg?itok=E-NIH6BN",
           imageAlt:
@@ -685,7 +691,7 @@ const navigation = {
         },
         {
           name: "茶包",
-          href: "#",
+          href: "/products",
           imageSrc:
             "https://7teahouse.com/sites/default/files/styles/ad_taxonomy/public/taxonomy/product_ad/%E8%8C%B6%E5%8C%851.jpg?itok=6Vrx8PYO",
           imageAlt:
@@ -693,7 +699,7 @@ const navigation = {
         },
         {
           name: "禮盒",
-          href: "#",
+          href: "/products",
           imageSrc:
             "https://7teahouse.com/sites/default/files/styles/ad_taxonomy/public/taxonomy/product_ad/220x260.jpg?itok=OxciHeuM",
           imageAlt:
@@ -703,8 +709,8 @@ const navigation = {
     },
   ],
   pages: [
-    { name: "香皂", href: "#" },
-    { name: "蠟燭", href: "#" },
+    { name: "香皂", href: "/products" },
+    { name: "蠟燭", href: "/products" },
   ],
 };
 

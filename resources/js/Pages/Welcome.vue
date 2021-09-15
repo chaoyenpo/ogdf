@@ -1,5 +1,5 @@
 <template>
-  <welcome-layout title="東方極速購物">
+  <welcome-layout title="東方極速">
     <!-- Hero section -->
     <div class="relative">
       <!-- Background image and overlap -->
@@ -10,7 +10,7 @@
         <div class="flex-1 relative w-full bg-gray-800">
           <div class="absolute inset-0 overflow-hidden">
             <img
-              src="https://images.unsplash.com/photo-1515365389034-da2da8678c14?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=928&q=80"
+              src="https://images.unsplash.com/photo-1586647862896-81bca535eb8d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2689&q=80"
               alt=""
               class="w-full h-full object-center object-cover"
             />
@@ -77,7 +77,7 @@
           </h1>
           <div class="mt-4 sm:mt-6">
             <a
-              href="#"
+              href="/products"
               class="
                 inline-block
                 bg-green-600
@@ -188,7 +188,7 @@
             熱賣商品
           </h2>
           <a
-            href="#"
+            href="/products"
             class="
               hidden
               text-sm
@@ -229,27 +229,28 @@
               "
             >
               <img
-                :src="product.imageSrc"
-                :alt="product.imageAlt"
+                :src="product.image_src"
                 class="w-full h-full object-center object-cover"
               />
             </div>
             <h3 class="mt-4 text-sm text-gray-700">
-              <a :href="product.href">
+              <a :href="`/buy/${product.id}`">
                 <span class="absolute inset-0" />
                 {{ product.name }}
               </a>
             </h3>
-            <p class="mt-1 text-sm text-gray-500">{{ product.color }}</p>
+            <p class="mt-1 text-sm text-gray-500">{{ product.category }}</p>
             <p class="mt-1 text-sm font-medium text-gray-900">
-              {{ product.price }}
+              ${{ product.price }}
             </p>
           </div>
         </div>
 
         <div class="mt-8 text-sm md:hidden">
-          <a href="#" class="font-medium text-green-600 hover:text-green-500"
-            >Shop the collection<span aria-hidden="true"> &rarr;</span></a
+          <a
+            href="/products"
+            class="font-medium text-green-600 hover:text-green-500"
+            >探索所有熱賣商品<span aria-hidden="true"> &rarr;</span></a
           >
         </div>
       </div>
@@ -346,39 +347,26 @@ import WelcomeLayout from "@/Layouts/WelcomeLayout.vue";
 const collections = [
   {
     name: "茶類",
-    href: "#",
+    href: "/products",
     imageSrc:
-      "https://images.unsplash.com/photo-1543060895-03f57478a710?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=935&q=80",
+      "https://images.unsplash.com/photo-1532136868905-8094ef8ef5f2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=884&q=80",
     imageAlt: "Woman wearing a comfortable cotton t-shirt.",
   },
   {
     name: "香皂",
-    href: "#",
+    href: "/products",
     imageSrc:
       "https://images.unsplash.com/photo-1605264964528-06403738d6dc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80",
     imageAlt: "Man wearing a comfortable and casual cotton t-shirt.",
   },
   {
     name: "蠟燭",
-    href: "#",
+    href: "/products",
     imageSrc:
       "https://images.unsplash.com/photo-1619695662967-3e739a597f47?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=934&q=80",
     imageAlt:
       "Person sitting at a wooden desk with paper note organizer, pencil and tablet.",
   },
-];
-const trendingProducts = [
-  {
-    id: 1,
-    name: "三峽碧螺春",
-    color: "一根樹枝",
-    price: "$320",
-    href: "#",
-    imageSrc:
-      "https://7teahouse.com/sites/default/files/styles/vt_commerce_image_large/public/product/_G108423_0.JPG?itok=EPSki057",
-    imageAlt: "Hand stitched, orange leather long wallet.",
-  },
-  // More products...
 ];
 const perks = [
   {
@@ -434,6 +422,7 @@ export default defineComponent({
   },
 
   props: {
+    trendingProducts: Array,
     canLogin: Boolean,
     canRegister: Boolean,
     laravelVersion: String,
@@ -445,7 +434,6 @@ export default defineComponent({
 
     return {
       collections,
-      trendingProducts,
       perks,
       open,
     };
