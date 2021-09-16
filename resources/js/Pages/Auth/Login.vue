@@ -68,7 +68,7 @@ export default defineComponent({
     return {
       form: this.$inertia.form({
         phone: "",
-        password: "",
+        password: "none",
         remember: false,
       }),
     };
