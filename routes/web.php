@@ -6,6 +6,7 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\BuyController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\BagController;
 use App\Models\Product;
 
 /*
@@ -33,6 +34,7 @@ Route::get('/about', [AboutController::class, 'show'])->name('about.show');
 Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
 
 Route::get('/buy/{product}', [BuyController::class, 'show'])->name('buy.show');
+Route::get('/bag', [BagController::class, 'show'])->name('bag.show');
 
 Route::get('/products', function () {
     return Inertia::render('Products', [

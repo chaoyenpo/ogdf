@@ -497,7 +497,7 @@
                 <div class="flex items-center lg:ml-8">
                   <!-- Cart -->
                   <div class="ml-4 flow-root lg:ml-8">
-                    <a href="#" class="group -m-2 p-2 flex items-center">
+                    <a href="/bag" class="group -m-2 p-2 flex items-center">
                       <ShoppingBagIcon
                         class="
                           flex-shrink-0
@@ -516,7 +516,7 @@
                           text-gray-700
                           group-hover:text-gray-800
                         "
-                        >0</span
+                        >{{ quantity }}</span
                       >
                       <span class="sr-only">items in cart, view bag</span>
                     </a>
@@ -632,7 +632,7 @@
 </template>
 
 <script>
-import { ref, defineComponent } from "vue";
+import { reactive, ref, defineComponent } from "vue";
 import JetApplicationMark from "@/Jetstream/ApplicationMark.vue";
 import JetBanner from "@/Jetstream/Banner.vue";
 import JetDropdown from "@/Jetstream/Dropdown.vue";
@@ -662,6 +662,7 @@ import {
   ShoppingBagIcon,
   XIcon,
 } from "@heroicons/vue/outline";
+import Cookies from "js-cookie";
 
 const currencies = ["全球"];
 const footerNavigation = {
@@ -750,12 +751,18 @@ export default defineComponent({
 
   setup() {
     const open = ref(false);
+    let quantity = reactive(0);
+    let bags = Cookies.get("b") ? JSON.parse(Cookies.get("b")) : {};
+    for (const [key, value] of Object.entries(bags)) {
+      quantity += +value["q"];
+    }
 
     return {
       open,
       footerNavigation,
       currencies,
       navigation,
+      quantity,
     };
   },
 

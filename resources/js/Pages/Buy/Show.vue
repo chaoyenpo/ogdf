@@ -123,7 +123,7 @@
               </div>
               <div class="mt-10">
                 <button
-                  type="submit"
+                  type="button"
                   class="
                     w-full
                     bg-green-600
@@ -144,6 +144,7 @@
                     focus:ring-offset-gray-50
                     focus:ring-green-500
                   "
+                  @click="() => addToBag(product.id)"
                 >
                   加入購物袋
                 </button>
@@ -171,22 +172,7 @@ import {
   RadioGroupOption,
 } from "@headlessui/vue";
 import { ShieldCheckIcon } from "@heroicons/vue/outline";
-
-const product = {
-  name: "三峽碧螺春",
-  href: "#",
-  price: "NT$320",
-  description: "完美栽培的一根樹枝。",
-  imageSrc:
-    "https://7teahouse.com/sites/default/files/styles/vt_commerce_image_large/public/product/_G108423_0.JPG?itok=EPSki057",
-  imageAlt:
-    "Model wearing light green backpack with black canvas straps and front zipper pouch.",
-  breadcrumbs: [
-    { id: 1, name: "Travel", href: "#" },
-    { id: 2, name: "Bags", href: "#" },
-  ],
-  sizes: [{ name: "盒裝", description: "目前都是 1 盒 10 包裝為單位" }],
-};
+import Cookies from "js-cookie";
 
 export default defineComponent({
   components: {
@@ -203,11 +189,19 @@ export default defineComponent({
 
   props: ["product"],
 
-  setup() {
-    const selectedSize = ref(product.sizes[0]);
+  setup(props) {
+    const selectedSize = ref(props.product.sizes[0]);
+
+    function addToBag(id) {
+      let bags = Cookies.get("b") ? JSON.parse(Cookies.get("b")) : {};
+      bags = { ...bags, [id]: { q: 1 } };
+      Cookies.set("b", JSON.stringify(bags));
+      this.$inertia.get(route("bag.show"));
+    }
 
     return {
       selectedSize,
+      addToBag,
     };
   },
 });
