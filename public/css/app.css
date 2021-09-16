@@ -1796,6 +1796,12 @@ select {
 .bg-opacity-25 {
 	--tw-bg-opacity: 0.25;
 }
+.bg-opacity-50 {
+	--tw-bg-opacity: 0.5;
+}
+.bg-opacity-75 {
+	--tw-bg-opacity: 0.75;
+}
 .bg-none {
 	background-image: none;
 }
@@ -2644,6 +2650,10 @@ select {
 		display: block;
 	}
 
+	.sm\:inline {
+		display: inline;
+	}
+
 	.sm\:flex {
 		display: flex;
 	}
@@ -2678,6 +2688,10 @@ select {
 
 	.sm\:w-32 {
 		width: 8rem;
+	}
+
+	.sm\:w-auto {
+		width: auto;
 	}
 
 	.sm\:max-w-md {
@@ -2827,6 +2841,21 @@ select {
 	.sm\:py-10 {
 		padding-top: 2.5rem;
 		padding-bottom: 2.5rem;
+	}
+
+	.sm\:py-40 {
+		padding-top: 10rem;
+		padding-bottom: 10rem;
+	}
+
+	.sm\:px-12 {
+		padding-left: 3rem;
+		padding-right: 3rem;
+	}
+
+	.sm\:py-16 {
+		padding-top: 4rem;
+		padding-bottom: 4rem;
 	}
 
 	.sm\:pt-0 {
@@ -3126,8 +3155,17 @@ select {
 		padding-right: 2rem;
 	}
 
+	.lg\:px-16 {
+		padding-left: 4rem;
+		padding-right: 4rem;
+	}
+
 	.lg\:pt-32 {
 		padding-top: 8rem;
+	}
+
+	.lg\:pt-16 {
+		padding-top: 4rem;
 	}
 
 	.lg\:text-center {

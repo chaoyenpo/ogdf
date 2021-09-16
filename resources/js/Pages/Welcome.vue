@@ -176,9 +176,96 @@
       </section>
     </div>
 
+    <section class="bg-white">
+      <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+        <div class="relative rounded-lg overflow-hidden">
+          <div class="absolute inset-0">
+            <img
+              src="https://images.unsplash.com/photo-1551075649-8fdfd4c6f842?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80"
+              alt=""
+              class="w-full h-full object-center object-cover"
+            />
+          </div>
+          <div
+            class="
+              relative
+              bg-gray-900 bg-opacity-75
+              py-32
+              px-6
+              sm:py-40
+              sm:px-12
+              lg:px-16
+            "
+          >
+            <div
+              class="
+                relative
+                max-w-3xl
+                mx-auto
+                flex flex-col
+                items-center
+                text-center
+              "
+            >
+              <h2
+                class="
+                  text-3xl
+                  font-extrabold
+                  tracking-tight
+                  text-white
+                  sm:text-4xl
+                "
+              >
+                <span class="block sm:inline">關於</span>
+                <span class="block sm:inline">東方極速</span>
+              </h2>
+              <p class="mt-3 text-xl text-white">
+                在現代忙碌的生活當中，你可曾慢下腳步享受悠哉的購物時光？
+              </p>
+              <p class="mt-3 text-xl text-white">
+                或許你忙於打拼生活、照顧家庭，無暇精心挑選屬意的商品。但請別灰心，「東方極速」提供最快速、便捷的購物網，主打銷售全球各精品奢華品牌，不但有品質保障，更讓你買的安心、用的放心。<br />
+              </p>
+              <p class="mt-3 text-xl text-white">
+                「東方極速」除了有快速運送服務外，也將迅速融入東、西方文化特產做為交流，致力成為東方國家最具有代表性的購物網。即使不出國，也能買遍各國特色商品。
+              </p>
+              <a
+                href="/products"
+                class="
+                  mt-8
+                  w-full
+                  block
+                  bg-white
+                  border border-transparent
+                  rounded-md
+                  py-3
+                  px-8
+                  text-base
+                  font-medium
+                  text-gray-900
+                  hover:bg-gray-100
+                  sm:w-auto
+                "
+                >探索商品</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section aria-labelledby="trending-heading">
       <div
-        class="max-w-7xl mx-auto py-24 px-4 sm:px-6 sm:py-32 lg:pt-32 lg:px-8"
+        class="
+          max-w-7xl
+          mx-auto
+          py-24
+          px-4
+          sm:px-6
+          sm:py-32
+          lg:pt-32
+          lg:px-8
+          hidden
+        "
       >
         <div class="md:flex md:items-center md:justify-between">
           <h2
