@@ -1,5 +1,5 @@
 <template>
-  <welcome-layout title="根據 props">
+  <welcome-layout :title="product.name">
     <div class="bg-white">
       <div
         class="

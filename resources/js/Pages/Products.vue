@@ -1,5 +1,5 @@
 <template>
-  <welcome-layout title="根據 props">
+  <welcome-layout title="產品列表">
     <div class="bg-white">
       <div
         class="
