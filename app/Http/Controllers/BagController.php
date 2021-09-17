@@ -10,7 +10,8 @@ class BagController extends Controller
 {
     public function show(Request $request)
     {
-        $bags = collect(json_decode($_COOKIE['b'], true));
+        $bags = isset($_COOKIE['b']) ? collect(json_decode($_COOKIE['b'], true)) : collect();
+
         $products = Product::whereIn('id', $bags->keys())->get();
 
         $subtotal = $products->sum(function ($product) use ($bags) {
